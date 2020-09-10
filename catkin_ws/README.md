@@ -6,6 +6,8 @@
 5. rosrun tf static_transform_publisher x y z qx qy qz qw base_link zed_left_camera_frame 10
 6. rosrun arm_operation goto_pose (function)
 
+FCN_models link: https://drive.google.com/drive/folders/16BfNAMEHXXAmN8FRmaBBmHBL3-Q2x83z?usp=sharing
+
 rosrun tf static_transform_publisher 0.464005 0.009211 0.744561 0.003557 0.704522 0.013398 0.709546 base_link camera_link 10 (0831 d435)
 
 rosrun tf static_transform_publisher 0.503521 0.009987 0.738177 0.513044 0.487423 -0.511339 0.487584 base_link zed_base_link 10
