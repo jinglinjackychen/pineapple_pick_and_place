@@ -1,0 +1,6 @@
+<launch>
+	<!-- <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0 0 0 3.661 map base_link01 10" /> -->
+	<node pkg="tf" type="static_transform_publisher" name="link2_broadcaster" args="0.40 0 0 1.57 0 -2.25 map base_link02 10" />
+	<!-- <node pkg="tf" type="static_transform_publisher" name="link3_broadcaster" args="0.02 0.54 0 3.14 0 3.663 map base_link03 10" /> -->
+	<node pkg="tf" type="static_transform_publisher" name="link4_broadcaster" args="-0.3 0 -0.05 -1.57 0 -2.29 map base_link04 10" />
+</launch>

@@ -1,0 +1,7 @@
+---
+geometry_msgs/PoseStamped pick_pose
+int16 obj_id
+int16 cluster_points
+int16 cluster_num
+string obj_str
+string status

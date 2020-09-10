@@ -1,0 +1,7 @@
+<launch>
+  <arg name="camera" default="on_hand_cam"/>
+  <node pkg="pose_estimation" name="get_pick_pose_service" type="get_obj_pose" output="screen" clear_params="true">
+    <rosparam command="load" file="$(find pose_estimation)/config/pose_estimation.yaml"/>
+    <remap from="~pc" to="$(arg camera)/depth_registered/points"/>
+  </node>
+</launch>

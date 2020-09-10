@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<launch>
+  <?ignore
+  <!-- SR300 -->
+  <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
+    <arg name="camera" value="camera1"/>
+  </include>
+  <!-- UR5 -->
+  <include file="$(find arm_operation)/launch/ur5_real.launch">
+    <arg name="robot_ip" value="192.168.50.11"/>
+    <arg name="tool_length" value="0.0"/>
+  </include>
+  ?>
+  <arg name="use_ft" default="false" doc="Whether turn on force torch sensor"/>
+  <!-- TCP information -->
+  <include file="$(find arm_operation)/launch/tcp_publisher.launch"/>
+  <!-- Vacuum -->
+  <node pkg="vacuum_conveyor_control" type="arduino_control" name="arduino_control" output="screen" clear_params="true" required="true">
+    <param name="port" value="/dev/ttyArduino"/>
+    <param name="vacuum_thres" value="40"/>
+  </node>
+  <!-- robotiq 2-finger gripper -->
+  <node pkg="robotiq_2f_gripper_control" type="Robotiq2FGripperRtuNode.py" name="robotiq2FGripper" args="/dev/ttyGripper" required="true"/>
+  <!-- robotiq gripper control -->
+  <node pkg="grasp_suck" type="robotiq_gripper_control" name="robotiq_finger_control_node" output="screen" required="true">
+    <param name="upper_thres" value="222"/>
+    <param name="lower_thres" value="10"/>
+  </node>
+  <!-- Visual System -->
+  <!-- Convert pointcloud from eye coord. to hand coord. -->
+  <node pkg="visual_system" type="pc_transform" name="pc_transform" output="screen" required="true">
+    <param name="verbose" value="true"/>
+    <param name="fitness_thres" value="0.000024"/>
+    <remap from="camera/color/image_raw" to="/on_hand_cam/color/image_raw"/>
+    <remap from="camera/aligned_depth_to_color/image_raw" to="/on_hand_cam/aligned_depth_to_color/image_raw"/>
+    <remap from="camera/color/camera_info" to="/on_hand_cam/color/camera_info"/>
+  </node>
+  <!-- High-level Control -->
+  <include file="$(find grasp_suck)/launch/helper_services.launch"/> 
+  <node pkg="robotiq_ft_sensor" type="rq_sensor" name="rq_sensor" output="screen" if="$(arg use_ft)">
+    <param name="serial_id" value="ttyFT"/>
+  </node>
+  <!-- Visualization -->
+  <node pkg="visualization" type="viz_boundary.py" name="viz_boundary_node"/>
+  <node pkg="visualization" type="viz_marker.py" name="viz_marker_node"/>
+</launch>

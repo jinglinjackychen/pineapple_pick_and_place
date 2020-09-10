@@ -1,0 +1,15 @@
+*.zip
+*.xml
+*.png
+*.jpg
+*.mat
+*.pdf
+*.csv
+*.pth
+*.pkl
+*.pyc
+*.jpg
+*.pcd
+build/
+devel/
+.vscode/

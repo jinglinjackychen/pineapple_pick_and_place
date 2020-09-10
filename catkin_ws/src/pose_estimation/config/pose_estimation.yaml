@@ -1,0 +1,2 @@
+{arm_prefix: '', buzzer_point_bound: 100, leaf_size: 0.003, max_point_num: 800, mid_point_bound: 460,
+  min_point_num: 20, score_thres: 4.0e-05, z_lower: 0.18}
