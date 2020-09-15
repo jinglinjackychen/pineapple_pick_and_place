@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<launch>
+  <!-- UR5 -->
+  <include file="$(find arm_operation)/launch/ur5_real.launch">
+    <arg name="robot_ip" value="192.168.50.11"/>
+    <arg name="tool_length" value="0.18"/>
+  </include>
+
+  <!-- zedm -->
+  <include file="$(find zed_wrapper)/launch/zedm.launch"/>
+
+  <!-- robotiq 2-finger gripper -->
+  <node pkg="robotiq_2f_gripper_control" type="Robotiq2FGripperRtuNode.py" name="Robotiq2FGripperRtuNode" args="/dev/ttyUSB1" output="screen" required="true"/>
+
+  <!-- vacuum_conveyor_control -->
+  <!--node pkg="vacuum_conveyor_control" type="arduino_control" name="arduino_control">
+    <param name="port" value="/dev/ttyUSB1"/>
+  </node-->
+
+  <!-- arm zedm static transform -->
+  <node pkg="tf" type="static_transform_publisher" name="arm_zedm_static_transform" args="-0.608136 -0.002742 0.732920 -0.499331 0.505999 0.494038 0.500559 base_link zed_base_link 10"/>
+
+  <!-- Visual System -->
+  <!-- Convert pointcloud from eye coord. to hand coord. -->
+  <!--node pkg="visual_system" type="pc_transform" name="pc_transform" output="screen" required="true">
+    <param name="verbose" value="true"/>
+    <param name="num_thres" value="$(arg empty_thres)"/>
+    <remap from="camera/color/image_raw" to="/camera1/color/image_raw"/>
+    <remap from="camera/aligned_depth_to_color/image_raw" to="/camera1/aligned_depth_to_color/image_raw"/>
+    <remap from="camera/color/camera_info" to="/camera1/color/camera_info"/>
+  </node-->
+
+</launch>
